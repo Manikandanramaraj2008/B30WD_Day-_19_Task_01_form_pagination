@@ -1,50 +1,79 @@
-function clicks(){
-  let qua=document.getElementsByName("food");
-  let quantity=0;
-  for(let i=0; i<qua.length; i++){
-  if(qua[i].checked)
-    quantity++;
-  }
+let one = document.getElementById("one")
+let two = document.getElementById("two")
+let three = document.getElementById("three")
+let four = document.getElementById("four")
+let five = document.getElementById("five")
+let six = document.getElementById("six")
+let seven = document.getElementById("seven")
+let eight = document.getElementById("eight")
+let nine = document.getElementById("nine")
+let zero = document.getElementById("zero")
 
-  if(quantity<2){
-    document.getElementById("par").innerHTML="*Please check atleast 2 items in foods section";
-  }
-  if(quantity>=2){
-      document.getElementById("par").innerHTML="";
-  let fname=document.getElementById("form1").elements.namedItem("name").value;
-  let lname=document.getElementById("form1").elements.namedItem("name2").value;
-  let address=document.getElementById("form1").elements.namedItem("address1").value;
-  let pincode=document.getElementById("form1").elements.namedItem("pin").value;
+let add = document.getElementById("add")
+let sub = document.getElementById("sub")
+let mul = document.getElementById("mul")
+let div = document.getElementById("div")
+let clear = document.getElementById("clear")
+let clear_last = document.getElementById("clear_last")
+let memory_plus = document.getElementById("memory_plus")
+let memory_minus = document.getElementById("memory_minus")
+let pad = document.querySelector(".pad")
+let equal = document.getElementById("equal")
 
-  let state=document.getElementById("form1").elements.namedItem("state").value;
-  let country=document.getElementById("form1").elements.namedItem("country").value;
-  let gender1="";
-  let ele = document.getElementsByName("gender") 
- for(i = 0; i < ele.length; i++) {
-     if(ele[i].checked)
-     gender1=ele[i].value;
- }
-  let food1=[];
-  let food=document.getElementsByName("food")
-  for(let i=0; i<food.length; i++){
-    if(food[i].checked)
-      food1.push(food[i].value);
-  }
+pad.addEventListener("click", display)
+clear.addEventListener("click",clearHistory)
+equal.addEventListener("click",result)
+
+
+let input = document.querySelector(".pad")
+let finalResult = document.querySelector("#input")
+result.finalResult = ""
+
+document.body.addEventListener("keypress",keypress)
+
+// //////////////////////////////////////////       functions       ////////////////////////////////////////////
+function display(e){
+    let span = document.querySelector("#span")
+    if(e.target.value===undefined){
+        span.innerHTML = span.innerHTML+""
+    }else{
+        span.innerHTML = span.innerHTML+e.target.value;
+    }
     
-  var table = document.getElementById("myTable");
-  var row = table.insertRow(1);
-  
-  row.insertCell(0).innerHTML=fname;
-  row.insertCell(1).innerHTML=lname;
-  row.insertCell(2).innerHTML=address;
-  row.insertCell(3).innerHTML=pincode;
-  row.insertCell(4).innerHTML=gender1;
-  row.insertCell(5).innerHTML=food1;
-  row.insertCell(6).innerHTML=state;
-  row.insertCell(7).innerHTML=country;
-  
-    document.getElementById("form1").reset();
-  }
+}
 
+function clearHistory(){
+    let span = document.querySelector("#span")
+    let finalResult = document.querySelector("#input")
+    span.innerHTML=""
+    finalResult.value = "0"
+}
+
+
+function result(){
+    let span = document.querySelector("#span"); 
+    let finalResult = document.querySelector("#input")
+    finalResult.value = eval(span.innerText); 
+}
+
+function calculation(num1,operator,num2){
+    if(operator === "+"){
+        return[num1+num2]
+    }else if(operator === "-"){
+        return num1-num2    
+    }else if(operator === "*"){
+        return num1*num2
+    }else if(operator === "/"){
+        return num1/num2
+    }
+}
+
+function keypress(e){
+    let span = document.querySelector("#span");
+    if((e.key<10 && e.key>=0) || e.key==="*" || e.key==="-" || e.key==="+" || e.key==="/" ){
+        span.innerText += e.key
+    }else if(e.key==="Enter"){
+        result()
+    }
 }
 
